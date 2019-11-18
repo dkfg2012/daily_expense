@@ -53,17 +53,24 @@ if (weekday == "Sat"):
         entertainment_cell = day_of_week[weekday] + str(current_row() + 7)
         other_cell = day_of_week[weekday] + str(current_row() + 8)
 
+def test_input(number):
+    try:
+        int(number)
+    except Exception:
+        return test_input(input("Enter must be integer, please enter again "))
+
+
 
 def input_expense():
     sheet[today_cell] = today
-    sheet[transport_cell] = "$ " + input("Your transport expense ")
-    sheet[breakfast_cell] = "$ " + input("Your breakfast expense ")
-    sheet[lunch_cell] = "$ " + input("Your lunch expense ")
-    sheet[dinner_cell] = "$ " + input("Your dinner expense ")
-    sheet[snack_cell] = "$ " + input("Your snack expense ")
-    sheet[drink_cell] = "$ " + input("Your drink expense ")
-    sheet[entertainment_cell] = "$ " + input("Your entertainmant expense ")
-    sheet[other_cell] = "$ " + input("Your other expense ")
+    sheet[transport_cell] = "$ " + test_input(input("Your transport expense "))
+    sheet[breakfast_cell] = "$ " + test_input(input("Your breakfast expense "))
+    sheet[lunch_cell] = "$ " + test_input(input("Your lunch expense "))
+    sheet[dinner_cell] = "$ " + test_input(input("Your dinner expense "))
+    sheet[snack_cell] = "$ " + test_input(input("Your snack expense "))
+    sheet[drink_cell] = "$ " + test_input(input("Your drink expense "))
+    sheet[entertainment_cell] = "$ " + test_input(input("Your entertainmant expense "))
+    sheet[other_cell] = "$ " + test_input(input("Your other expense "))
 
 # input_expense()
 
