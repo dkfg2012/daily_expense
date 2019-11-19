@@ -16,16 +16,31 @@ def today_weekday():
     weekday = calendar.day_name[calendar.weekday(*weekday)][0:3]
     return today, weekday
 
+def yesterday_weekday():
+    yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+    yesterday = tuple(list(map(int, yesterday.strftime("%Y,%m,%d").split(','))))
+    y_weekday = calendar.day_name[calendar.weekday(*yesterday)][0:3]
+    return y_weekday
+
 def current_row():
-    try:
-        Sat_row = list(ws.columns)[7]
-        for cell in Sat_row:
-            if(cell.value != None or ws.max_row <= cell.row):
-                current_row = cell.row + 5
+    if(sheet["Z1"].value != None):
+        current_row = sheet["Z1"].value
+        y_weekday = yesterday_weekday()
+        try:
+            if(y_weekday == "Sat"):
+                Sat_row = list(ws.columns)[7]
+                for cell in Sat_row:
+                    if (cell.value != None or ws.max_row <= cell.row):
+                        current_row = cell.row + 5
+                    else:
+                        current_row = ws.max_row + 5
             else:
-                current_row = ws.max_row + 5
-    except:
+                pass
+        except:
+            pass
+    else:
         current_row = 1
+    sheet["Z1"].value = current_row
     return current_row
 
 today, weekday = today_weekday()
@@ -58,6 +73,7 @@ def test_input(number):
         int(number)
     except Exception:
         return test_input(input("Enter must be integer, please enter again "))
+    return number
 
 
 
@@ -72,12 +88,6 @@ def input_expense():
     sheet[entertainment_cell] = "$ " + test_input(input("Your entertainmant expense "))
     sheet[other_cell] = "$ " + test_input(input("Your other expense "))
 
-# input_expense()
-
-
-# add column
-# if type(sheet['A2'].value) == type(None):
-#     for label in range(len(column)):
-#         sheet['A'+str(label+2)].value = column[label]
+input_expense()
 
 wb.save("expense_table.xlsx")
