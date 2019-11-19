@@ -70,7 +70,7 @@ if (weekday == "Sat"):
 
 def test_input(number):
     try:
-        int(number)
+        float(number)
     except Exception:
         return test_input(input("Enter must be integer, please enter again "))
     return number
